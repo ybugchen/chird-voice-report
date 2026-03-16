@@ -265,14 +265,81 @@ footer {
     font-size: 1.2rem;
 }
 
-/* Responsive */
+/* Responsive - Mobile */
 @media (max-width: 600px) {
-    .form-row {
-        grid-template-columns: 1fr;
+    body {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .container {
+        padding: 12px;
+    }
+
+    header {
+        padding: 20px 0 12px;
     }
 
     header h1 {
         font-size: 1.5rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+    }
+
+    .input-section {
+        padding: 16px;
+        border-radius: 12px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+    }
+
+    input[type="text"],
+    select {
+        padding: 14px 12px;
+        font-size: 16px; /* prevents iOS zoom on focus */
+        border-radius: 8px;
+    }
+
+    .suggestion-tag {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+    }
+
+    .btn-primary {
+        padding: 16px;
+        font-size: 1.05rem;
+        border-radius: 10px;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-secondary {
+        padding: 12px 18px;
+    }
+
+    .demo-banner {
+        font-size: 0.85rem;
+        padding: 10px 14px;
+        border-radius: 10px;
+    }
+
+    .result-section {
+        padding: 16px;
+        border-radius: 12px;
+    }
+
+    .story-content {
+        padding: 14px;
+        font-size: 1rem;
+        line-height: 1.9;
+        max-height: 50vh;
+        border-radius: 10px;
     }
 
     .audio-player {
@@ -282,5 +349,21 @@ footer {
 
     .audio-player audio {
         width: 100%;
+    }
+
+    .btn-download {
+        text-align: center;
+        padding: 14px;
+    }
+
+    .story-actions {
+        flex-wrap: wrap;
+    }
+}
+
+/* Safe area for notched phones */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    footer {
+        padding-bottom: calc(20px + env(safe-area-inset-bottom));
     }
 }

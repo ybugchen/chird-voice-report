@@ -1,0 +1,22 @@
+{
+  "name": "儿童语音读物生成器",
+  "short_name": "儿童读物",
+  "description": "输入题材，为孩子生成专属有声故事",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffecd2",
+  "theme_color": "#e17055",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/static/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/static/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
