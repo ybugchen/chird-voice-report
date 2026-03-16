@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>儿童语音读物生成器</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 儿童语音读物生成器</h1>
+            <p class="subtitle">输入题材，为孩子生成专属有声故事</p>
+        </header>
+
+        <main>
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="form-group">
+                    <label for="topic">故事题材</label>
+                    <input type="text" id="topic" placeholder="例如：小兔子的冒险、勇敢的小狮子..." maxlength="100">
+                </div>
+
+                <div class="suggestions">
+                    <span class="suggestions-label">热门题材：</span>
+                    {% for suggestion in suggestions %}
+                    <button class="suggestion-tag" data-topic="{{ suggestion }}">{{ suggestion }}</button>
+                    {% endfor %}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="age-range">年龄段</label>
+                        <select id="age-range">
+                            {% for age in age_ranges %}
+                            <option value="{{ age.value }}">{{ age.label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="voice">朗读声音</label>
+                        <select id="voice">
+                            {% for key, info in voices.items() %}
+                            <option value="{{ key }}">{{ info.label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rate">语速</label>
+                        <select id="rate">
+                            <option value="-30%">较慢</option>
+                            <option value="-10%" selected>适中</option>
+                            <option value="+0%">正常</option>
+                            <option value="+15%">稍快</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generate-btn" class="btn-primary">生成语音读物</button>
+            </section>
+
+            <!-- Loading -->
+            <section id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>正在为孩子创作专属故事，请稍候...</p>
+            </section>
+
+            <!-- Result Section -->
+            <section id="result" class="result-section hidden">
+                <h2>故事内容</h2>
+                <div id="story-text" class="story-content" contenteditable="false"></div>
+
+                <div class="story-actions">
+                    <button id="edit-btn" class="btn-secondary">编辑故事</button>
+                    <button id="regenerate-tts-btn" class="btn-secondary hidden">重新生成语音</button>
+                </div>
+
+                <h2>语音播放</h2>
+                <div class="audio-player">
+                    <audio id="audio-player" controls></audio>
+                    <a id="download-btn" class="btn-download" download="children_story.mp3">下载音频</a>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>儿童语音读物生成器 - 用AI为孩子讲故事</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
