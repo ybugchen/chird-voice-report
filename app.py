@@ -5,10 +5,16 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, jsonify, render_template, request, send_file
 
-from backend.story_generator import generate_story
 from backend.tts_engine import get_available_voices, text_to_speech
 
 load_dotenv()
+
+DEMO_MODE = not os.getenv("OPENAI_API_KEY")
+
+if DEMO_MODE:
+    from backend.preset_stories import find_matching_story
+else:
+    from backend.story_generator import generate_story
 
 app = Flask(
     __name__,
@@ -39,6 +45,7 @@ def index():
         voices=voices,
         age_ranges=AGE_RANGES,
         suggestions=TOPIC_SUGGESTIONS,
+        demo_mode=DEMO_MODE,
     )
 
 
@@ -55,13 +62,19 @@ def api_generate():
         return jsonify({"error": "请输入故事题材"}), 400
 
     try:
-        story_text = generate_story(topic, age_range)
+        if DEMO_MODE:
+            matched = find_matching_story(topic, age_range)
+            story_text = matched["text"]
+        else:
+            story_text = generate_story(topic, age_range)
+
         audio_path = text_to_speech(story_text, voice_key=voice, rate=rate)
         audio_filename = os.path.basename(audio_path)
 
         return jsonify({
             "story": story_text,
             "audio_url": f"/audio/{audio_filename}",
+            "demo_mode": DEMO_MODE,
         })
     except Exception as e:
         return jsonify({"error": f"生成失败: {str(e)}"}), 500

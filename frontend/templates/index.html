@@ -13,6 +13,13 @@
             <p class="subtitle">输入题材，为孩子生成专属有声故事</p>
         </header>
 
+        {% if demo_mode %}
+        <div class="demo-banner">
+            <span class="demo-banner-icon">🎭</span>
+            <span>演示模式 - 使用预置故事（设置 OPENAI_API_KEY 以启用AI生成）</span>
+        </div>
+        {% endif %}
+
         <main>
             <!-- Input Section -->
             <section class="input-section">
@@ -64,7 +71,11 @@
             <!-- Loading -->
             <section id="loading" class="loading hidden">
                 <div class="spinner"></div>
+                {% if demo_mode %}
+                <p>正在匹配预置故事并生成语音...</p>
+                {% else %}
                 <p>正在为孩子创作专属故事，请稍候...</p>
+                {% endif %}
             </section>
 
             <!-- Result Section -->
