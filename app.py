@@ -22,6 +22,9 @@ app = Flask(
     static_folder="frontend/static",
 )
 
+# Ensure output directory exists
+os.makedirs(os.path.join(os.path.dirname(__file__), "output"), exist_ok=True)
+
 AGE_RANGES = [
     {"value": "3-6", "label": "3-6岁（幼儿）"},
     {"value": "7-9", "label": "7-9岁（小学低年级）"},
@@ -111,4 +114,5 @@ def serve_audio(filename):
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
-    app.run(debug=True, host="0.0.0.0", port=port)
+    debug = os.getenv("FLASK_DEBUG", "false").lower() in ("true", "1")
+    app.run(debug=debug, host="0.0.0.0", port=port)

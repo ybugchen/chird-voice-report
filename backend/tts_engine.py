@@ -1,10 +1,13 @@
 """Text-to-Speech engine using Edge TTS for generating children's audiobooks."""
 
 import asyncio
+import logging
 import os
 import uuid
 
 import edge_tts
+
+logger = logging.getLogger(__name__)
 
 # Voice options suitable for children's stories
 VOICE_OPTIONS = {
@@ -48,7 +51,13 @@ def text_to_speech(
     filename = f"story_{uuid.uuid4().hex[:8]}.mp3"
     output_path = os.path.join(OUTPUT_DIR, filename)
 
-    asyncio.run(_synthesize(text, voice, output_path, rate))
+    try:
+        asyncio.run(_synthesize(text, voice, output_path, rate))
+    except Exception as e:
+        logger.error("Edge TTS synthesis failed: %s", e)
+        raise RuntimeError(
+            "语音合成失败，请检查网络连接。Edge TTS 需要访问微软服务器。"
+        ) from e
 
     return output_path
 
