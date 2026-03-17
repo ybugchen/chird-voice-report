@@ -1,0 +1,12 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      # - OPENAI_API_KEY=your-key-here  # Uncomment to enable AI story generation
+      # - FLASK_DEBUG=true               # Uncomment to enable debug mode
+    volumes:
+      - ./output:/app/output
+    restart: unless-stopped
